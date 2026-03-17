@@ -1,0 +1,35 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    static long countArray(int n, int k, int x) {
+        long MOD = 1000000007L;
+        
+        // Initial state at length 1 (Array starts with 1)
+        long waysX = (x == 1) ? 1 : 0;
+        long waysNotX = (x == 1) ? 0 : 1;
+
+        // Iterate from 2 to n to build the transitions
+        for (int i = 1; i < n; i++) {
+            long prevWaysX = waysX;
+            long prevWaysNotX = waysNotX;
+
+            // Transition logic
+            waysX = prevWaysNotX;
+            waysNotX = (prevWaysX * (k - 1) + prevWaysNotX * (k - 2)) % MOD;
+        }
+
+        return waysX;
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int k = in.nextInt();
+        int x = in.nextInt();
+        
+        System.out.println(countArray(n, k, x));
+        in.close();
+    }
+}
